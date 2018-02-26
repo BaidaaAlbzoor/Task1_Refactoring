@@ -1,18 +1,25 @@
 const fs = require('fs');
 let values = [];
-let users = [];
 let invalidUsers = [];
 let validUsers = [];
 let invalidUResult = "";
 let validationMsg = "";
 let usersasString;
 
-let content = fs.readFileSync('./data.csv', 'utf8');
+
 let lines = content.split("\n");
 let headers = lines.shift();
 let keys = headers.split(",");
 
+main();
 
+function main() {
+    let content = fs.readFileSync('./data.csv', 'utf8');
+    let {lines,headers,keys} = parseFileContent(content);
+    let users = parseLinesToUsers(lines,keys);
+    let {validUsers,invalidUsers} = validation(users);
+    writeUsersToJsonfile(validUsers);
+}
 
 let result = lines.forEach(line => {
     let obj = {};
@@ -35,7 +42,7 @@ let validOnes = users.forEach(user => {
 
     else {
 
-      
+
         invalidUsers.push(user);
     }
 });

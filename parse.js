@@ -41,7 +41,7 @@ function UserValidation(users) {
     let validUsers = [];
 
     users.forEach(user => {
-        if (isValidUser(users,user)) {
+        if (isValidUser(users, user)) {
             validUsers.push(user);
         }
         else {
@@ -51,9 +51,9 @@ function UserValidation(users) {
 
 }
 
-function isValidUser(users,user){
-    return emailValidation(user.email) && !(idValidation(users,user.id)) && ageValidation(user.age);
-  
+function isValidUser(users, user) {
+    return emailValidation(user.email) && !(idValidation(users, user.id)) && ageValidation(user.age);
+
 }
 
 
@@ -64,26 +64,22 @@ fs.writeFileSync("./users.json", usersasString);
 
 //email validation function 
 function emailValidation(email) {
-  return  /(.+)@(.+){2,}\.(.+){2,}/.test(email);
+    return /(.+)@(.+){2,}\.(.+){2,}/.test(email);
 }
 
 //id validation function 
-function idValidation(id) {
+function idValidation(users, id) {
     let count = 0;
     let duplicatID = false;
     users.forEach(users => {
         if (users.id === id) {
             count++;
-        };
-
-        if (count > 1) {
-            duplicatID = true;
-
         }
-        //console.log("dup?:"+duplicatID);
-        return duplicatID;
     });
-
+    if (count > 1) {
+        duplicatID = true;
+    }
+    return duplicatID;
 }
 
 //age validation function 

@@ -7,19 +7,24 @@ let validationMsg = "";
 let usersasString;
 
 
-let lines = content.split("\n");
-let headers = lines.shift();
-let keys = headers.split(",");
 
 main();
 
 function main() {
     let content = fs.readFileSync('./data.csv', 'utf8');
-    let {lines,headers,keys} = parseFileContent(content);
-    let users = parseLinesToUsers(lines,keys);
-    let {validUsers,invalidUsers} = validation(users);
+    let { lines, headers, keys } = parseFileContent(content);
+    let users = parseLinesToUsers(lines, keys);
+    let { validUsers, invalidUsers } = validation(users);
     writeUsersToJsonfile(validUsers);
 }
+
+function parseFileContent(fileContent) {
+    let lines = content.split("\n");
+    let headers = lines.shift();
+    let keys = headers.split(",");
+    return { lines, headers, keys };
+}
+
 
 let result = lines.forEach(line => {
     let obj = {};

@@ -1,7 +1,4 @@
 const fs = require('fs');
-let values = [];
-let invalidUsers = [];
-let validUsers = [];
 let invalidUResult = "";
 let validationMsg = "";
 let usersasString;
@@ -14,7 +11,7 @@ function main() {
     let content = fs.readFileSync('./data.csv', 'utf8');
     let { lines, headers, keys } = parseFileContent(content);
     let users = parseLinesToUsers(lines, keys);
-    let { validUsers, invalidUsers } = validation(users);
+    let { validUsers, invalidUsers } = UserValidation(users);
     writeUsersToJsonfile(validUsers);
 }
 
@@ -26,7 +23,7 @@ function parseFileContent(fileContent) {
 }
 
 function parseLinesToUsers(lines, keys) {
-
+    let values = [];
     let users = lines.map(line => {
         let obj = {};
         values = line.split(",");
@@ -38,20 +35,26 @@ function parseLinesToUsers(lines, keys) {
     return users;
 }
 
-// sort users to valid and invalid users
-let validOnes = users.forEach(user => {
-    if ((emailValidation(user.email) && !(idValidation(user.id)) && ageValidation(user.age)) === true) {
 
-        validUsers.push(user);
-    }
+function UserValidation(users) {
+    let invalidUsers = [];
+    let validUsers = [];
 
-    else {
+    users.forEach(user => {
+        if (isValidUser(users,user)) {
+            validUsers.push(user);
+        }
+        else {
+            invalidUsers.push(user);
+        }
+    });
 
+}
 
-        invalidUsers.push(user);
-    }
-});
-
+function isValidUser(users,user){
+    return emailValidation(user.email) && !(idValidation(users,user.id)) && ageValidation(user.age);
+  
+}
 
 //store valid users in json file
 usersasString = JSON.stringify(validUsers);

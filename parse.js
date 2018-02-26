@@ -7,11 +7,12 @@ function main() {
     let content = fs.readFileSync('./data.csv', 'utf8');
     let { lines, headers, keys } = parseFileContent(content);
     let users = parseLinesToUsers(lines, keys);
-    let { validUsers, invalidUsers } = UserValidation(users);
+    let { validUsers, invalidUsers } = userValidation(users);
     writeUsersToJsonfile(validUsers);
+    console.log("writing to file done");
 }
 
-function parseFileContent(fileContent) {
+function parseFileContent(content) {
     let lines = content.split("\n");
     let headers = lines.shift();
     let keys = headers.split(",");
@@ -32,7 +33,7 @@ function parseLinesToUsers(lines, keys) {
 }
 
 
-function UserValidation(users) {
+function userValidation(users) {
     let invalidUsers = [];
     let validUsers = [];
 
@@ -44,6 +45,11 @@ function UserValidation(users) {
             invalidUsers.push(user);
         }
     });
+    return {
+validUsers,
+invalidUSers
+
+    }
 }
 
 function isValidUser(users, user) {
@@ -73,7 +79,7 @@ function ageValidation(age) {
     return age > 0;
 }
 
-function writeUsersToJsonfile(validUsers) {
+function writeUsersToJsonfile(validUsers){
 
     let usersasString = JSON.stringify(validUsers);
     fs.writeFileSync("./users.json", usersasString);

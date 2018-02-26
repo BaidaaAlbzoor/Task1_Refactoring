@@ -1,8 +1,4 @@
 const fs = require('fs');
-let invalidUResult = "";
-let validationMsg = "";
-let usersasString;
-
 
 
 main();
@@ -48,7 +44,6 @@ function UserValidation(users) {
             invalidUsers.push(user);
         }
     });
-
 }
 
 function isValidUser(users, user) {
@@ -56,18 +51,10 @@ function isValidUser(users, user) {
 
 }
 
-
-//store valid users in json file
-usersasString = JSON.stringify(validUsers);
-fs.writeFileSync("./users.json", usersasString);
-
-
-//email validation function 
 function emailValidation(email) {
     return /(.+)@(.+){2,}\.(.+){2,}/.test(email);
 }
 
-//id validation function 
 function idValidation(users, id) {
     let count = 0;
     let duplicatID = false;
@@ -82,7 +69,12 @@ function idValidation(users, id) {
     return duplicatID;
 }
 
-//age validation function 
 function ageValidation(age) {
     return age > 0;
+}
+
+function writeUsersToJsonfile(validUsers) {
+
+    let usersasString = JSON.stringify(validUsers);
+    fs.writeFileSync("./users.json", usersasString);
 }

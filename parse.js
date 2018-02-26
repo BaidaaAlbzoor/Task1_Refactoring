@@ -25,18 +25,18 @@ function parseFileContent(fileContent) {
     return { lines, headers, keys };
 }
 
+function parseLinesToUsers(lines, keys) {
 
-let result = lines.forEach(line => {
-    let obj = {};
-
-    values = line.split(",");
-    keys.map((item, index) => {
-        obj[item] = values[index];
+    let users = lines.map(line => {
+        let obj = {};
+        values = line.split(",");
+        keys.forEach((item, index) => {
+            obj[item] = values[index];
+        });
+        return obj;
     });
-
-    users.push(obj);
-
-});
+    return users;
+}
 
 // sort users to valid and invalid users
 let validOnes = users.forEach(user => {

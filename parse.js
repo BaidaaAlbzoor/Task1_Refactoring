@@ -56,6 +56,7 @@ function isValidUser(users,user){
   
 }
 
+
 //store valid users in json file
 usersasString = JSON.stringify(validUsers);
 fs.writeFileSync("./users.json", usersasString);
@@ -63,17 +64,7 @@ fs.writeFileSync("./users.json", usersasString);
 
 //email validation function 
 function emailValidation(email) {
-
-    if (/(.+)@(.+){2,}\.(.+){2,}/.test(email)) {
-        validationMsg = "valid email";
-        // console.log(validationMsg);
-        return true;
-    } else {
-        validationMsg = "invalid email";
-        //console.log(validationMsg);
-        return false;
-
-    }
+  return  /(.+)@(.+){2,}\.(.+){2,}/.test(email);
 }
 
 //id validation function 

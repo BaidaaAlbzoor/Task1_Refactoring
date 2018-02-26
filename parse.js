@@ -84,13 +84,5 @@ function idValidation(users, id) {
 
 //age validation function 
 function ageValidation(age) {
-    if (age > 0) {
-        //console.log("vaild age");
-        return true;
-
-    }
-    else {
-        // console.log("invaild age");
-        return false;
-    }
+    return age > 0;
 }
